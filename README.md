@@ -1,1 +1,2 @@
 # Despliegue-de-aplicacion-Healthy-IaC
+Healthy es una aplicación web de bienestar físico y emocional que permite a los usuarios personalizar hábitos saludables, establecer metas y visualizar su progreso dentro de planes integrales. La arquitectura serverless en AWS garantiza escalabilidad, seguridad y bajo mantenimiento. Utiliza autenticación con Cognito, almacenamiento en S3, procesamiento con Lambda y una base de datos relacional en PostgreSQL.
