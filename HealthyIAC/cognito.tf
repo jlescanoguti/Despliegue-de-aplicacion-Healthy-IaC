@@ -1,6 +1,6 @@
 # Cognito User Pool
 resource "aws_cognito_user_pool" "healthy_user_pool" {
-  name = "healthy-user-pool"
+  name = var.cognito_user_pool_name
 
   password_policy {
     minimum_length    = 8
@@ -14,7 +14,7 @@ resource "aws_cognito_user_pool" "healthy_user_pool" {
 
 # Cognito User Pool Client
 resource "aws_cognito_user_pool_client" "healthy_user_pool_client" {
-  name         = "healthy-client"
+  name         = var.cognito_user_pool_client_name
   user_pool_id = aws_cognito_user_pool.healthy_user_pool.id
   generate_secret = false  # No generamos un secreto para el cliente
 }

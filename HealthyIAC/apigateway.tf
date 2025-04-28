@@ -1,17 +1,13 @@
 # 1. API Gateway
 resource "aws_apigatewayv2_api" "healthy_api" {
-  name          = "healthy-api"
+  name          = var.api_gateway_name
   protocol_type = "HTTP"
 }
 
 resource "aws_apigatewayv2_stage" "healthy_api_stage" {
   api_id      = aws_apigatewayv2_api.healthy_api.id
-  name        = "dev"
+  name        = var.api_stage_name
   auto_deploy = true
-}
-
-output "api_gateway_url" {
-  value = aws_apigatewayv2_stage.healthy_api_stage.invoke_url
 }
 
 # 2. Integración con Lambda
@@ -21,6 +17,7 @@ resource "aws_apigatewayv2_integration" "api_integration" {
   integration_uri        = aws_lambda_function.hello_world.invoke_arn
   payload_format_version = "2.0"
 }
+
 
 # 3. Ruta para invocar la Lambda
 resource "aws_apigatewayv2_route" "api_route" {

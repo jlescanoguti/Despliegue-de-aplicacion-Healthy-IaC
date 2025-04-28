@@ -1,5 +1,6 @@
+# IAM Role para la ejecución de Lambda
 resource "aws_iam_role" "lambda_execution_role" {
-  name = "lambda-execution-role-healthy"
+  name = var.lambda_execution_role_name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -14,4 +15,3 @@ resource "aws_iam_role" "lambda_execution_role" {
     ]
   })
 }
-
