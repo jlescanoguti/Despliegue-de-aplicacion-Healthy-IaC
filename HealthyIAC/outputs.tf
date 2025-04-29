@@ -34,3 +34,8 @@ output "api_gateway_url" {
   value       = aws_apigatewayv2_stage.healthy_api_stage.invoke_url
   description = "URL de la API Gateway"
 }
+
+# CloudWatch
+output "lambda_log_group_name" {
+  value = aws_cloudwatch_log_group.lambda_log_group.name
+}
