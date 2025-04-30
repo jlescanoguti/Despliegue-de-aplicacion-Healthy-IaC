@@ -1,7 +1,7 @@
 exports.handler = async (event) => {
   console.log('Lambda se ejecutó correctamente');
   console.log('Received event:', JSON.stringify(event, null, 2));
-
+  
   const user = event.requestContext.authorizer?.jwt?.claims;
   console.log('User claims:', user);
 
@@ -9,7 +9,7 @@ exports.handler = async (event) => {
       return {
           statusCode: 200,
           body: JSON.stringify({
-              message: 'Hello from Lambda!',
+              message: `Hello from Lambda!`,
           }),
       };
   } else {

@@ -46,5 +46,5 @@ resource "aws_lambda_permission" "api_gateway_permission" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.hello_world.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.healthy_api.execution_arn}//"
+  source_arn    = "${aws_apigatewayv2_api.healthy_api.execution_arn}/*/*"
 }
