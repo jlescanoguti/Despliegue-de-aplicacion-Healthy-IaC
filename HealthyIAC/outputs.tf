@@ -64,3 +64,9 @@ output "rds_username" {
   description = "Usuario administrador"
   value       = aws_db_instance.healthy.username  # Aquí obtenemos el nombre de usuario configurado
 }
+
+#Salida ec2_public_ip
+#output "ec2_public_ip" {
+#  description = "La IP pública de la instancia EC2"
+#  value       = aws_instance.bastion.public_ip
+#}
