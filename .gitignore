@@ -29,3 +29,11 @@
 
 # Ignorar otros archivos potencialmente generados que no sean necesarios
 *.bak
+
+# Ignorar dependencias y archivos comunes de Node.js
+node_modules/
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
