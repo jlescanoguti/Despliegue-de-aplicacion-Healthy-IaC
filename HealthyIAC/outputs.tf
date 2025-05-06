@@ -44,3 +44,23 @@ output "api_gateway_authorizer_id" {
 output "lambda_log_group_name" {
   value = aws_cloudwatch_log_group.lambda_log_group.name
 }
+
+# Terraform nos muestra la URL que podemos usar para acceder a la base de datos
+output "rds_endpoint" {
+  description = "Endpoint de conexión de la base de datos"
+  value       = aws_db_instance.healthy.endpoint  # Aquí obtenemos el endpoint de la base de datos RDS creada
+}
+
+# Salida del nombre de la base de datos
+# Este es el nombre de la base de datos que se definió en la variable "db_name"
+output "rds_name" {
+  description = "Nombre de la base de datos"
+  value       = aws_db_instance.healthy.db_name  # Aquí obtenemos el nombre de la base de datos RDS creada
+}
+
+# Salida del nombre de usuario administrador de la base de datos
+# Este es el nombre del usuario con el que se creó la base de datos
+output "rds_username" {
+  description = "Usuario administrador"
+  value       = aws_db_instance.healthy.username  # Aquí obtenemos el nombre de usuario configurado
+}

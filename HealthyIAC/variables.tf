@@ -69,3 +69,49 @@ variable "region" {
   type        = string
   default     = "us-east-1"
 }
+
+# Rango de direcciones IP privadas para la red principal (VPC)
+variable "vpc_cidr" {
+  default = "10.0.0.0/16"
+}
+
+# Rango de direcciones IP para una subred dentro de la VPC
+variable "subnet_cidr" {
+  default = "10.0.1.0/24"
+}
+
+# Zona de disponibilidad en la que se desplegará los recursos (como la subred)
+
+variable "availability_zone" {
+  default = "us-east-1a"
+}
+
+# Nombre de la base de datos PostgreSQL que se creará dentro de RDS
+variable "db_name" {
+  default = "healthy_db"
+}
+
+# Usuario administrador para la base de datos
+variable "db_username" {
+  default = "healthyadmin"
+}
+
+# Contraseña del usuario administrador
+# `sensitive = true` evita que Terraform la muestre en consola
+variable "db_password" {
+  description = "Contraseña de la base de datos"
+  sensitive   = true
+  default     = "PasswordSegura123"
+}
+
+# Tipo de instancia que se usará para RDS
+# db.t3.micro es válida para pruebas y entra dentro del Free Tier
+variable "db_instance_class" {
+  default = "db.t3.micro"
+}
+
+# Cantidad de almacenamiento asignado (en GB) para la base de datos
+# El mínimo permitido es 20 GB
+variable "db_allocated_storage" {
+  default = 20
+}
