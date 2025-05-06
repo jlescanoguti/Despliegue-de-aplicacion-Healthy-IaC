@@ -115,3 +115,19 @@ variable "db_instance_class" {
 variable "db_allocated_storage" {
   default = 20
 }
+
+
+#EC2
+#variable "ec2_instance_type" {
+#  default = "t2.micro"
+#}
+#
+#variable "key_name" {
+#  description = "Nombre del par de claves SSH"
+#  default     = "healthy-key"
+#}
+
+variable "my_ip" {
+  description = "Tu IP pública"
+  default     = "179.6.81.6/32"
+}

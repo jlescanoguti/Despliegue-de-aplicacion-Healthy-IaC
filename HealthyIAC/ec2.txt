@@ -1,0 +1,41 @@
+resource "aws_instance" "bastion" {
+  ami               = "ami-003a5ae80f8a7ad8a" 
+  instance_type     = "t2.micro"
+  subnet_id         = aws_subnet.main_subnet_1.id   # Subred pública
+  vpc_security_group_ids = [aws_security_group.bastion_sg.id]
+  key_name          = aws_key_pair.healthy_key.key_name
+
+  associate_public_ip_address = true  # Asegura que la EC2 tenga IP pública
+
+  tags = {
+    Name = "Bastion-Instance"
+  }
+}
+
+# Security Group para EC2
+resource "aws_security_group" "bastion_sg" {
+  name        = "bastion-security-group"
+  description = "Permite el acceso SSH"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.my_ip]  # Usa una variable con tu IP correctamente formateada
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Crear un Key Pair en AWS
+resource "aws_key_pair" "healthy_key" {
+  key_name   = "healthy-key"
+  public_key = file("C:/Users/ASUS/.ssh/id_ed25519.pub")  # Asegúrate de que la ruta sea correcta
+}
+
