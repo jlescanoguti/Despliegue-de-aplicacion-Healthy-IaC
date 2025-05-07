@@ -129,5 +129,5 @@ variable "db_allocated_storage" {
 
 variable "my_ip" {
   description = "Tu IP pública"
-  default     = "179.6.81.6/32"
+  default     = "179.6.166.107/32"
 }

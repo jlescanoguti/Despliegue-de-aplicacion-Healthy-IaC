@@ -3,7 +3,7 @@
 #####
 
 aws cognito-idp admin-set-user-password `
-  --user-pool-id us-east-1_xsCtmOt9h `
+  --user-pool-id us-east-1_9BT598j6V `
   --username testuser `
   --password Example123! `
   --permanent
@@ -12,7 +12,7 @@ aws cognito-idp admin-set-user-password `
 
 $response = aws cognito-idp initiate-auth `
   --auth-flow USER_PASSWORD_AUTH `
-  --client-id 7kc3e26g5invjv60lnrlhp720q `
+  --client-id lvj8fm3m5hvno0gtcjc8ge3d6 `
   --auth-parameters USERNAME=testuser,PASSWORD=Example123! | ConvertFrom-Json
 
 #######
