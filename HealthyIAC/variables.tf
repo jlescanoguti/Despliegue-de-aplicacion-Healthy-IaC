@@ -5,7 +5,7 @@
 variable "bucket_name" {
   description = "Nombre del bucket S3"
   type        = string
-  default     = "healthy-app-files-1234567890"  # Aquí puedes cambiar el nombre por uno único
+  default     = "healthy-app-files-1234567890"  
 }
 
 # Cognito User Pool
