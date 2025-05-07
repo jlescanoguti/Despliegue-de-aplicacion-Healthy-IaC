@@ -1,0 +1,40 @@
+#Flujo de simulación de inicio sesión
+
+#####
+
+aws cognito-idp admin-set-user-password `
+  --user-pool-id us-east-1_xsCtmOt9h `
+  --username testuser `
+  --password Example123! `
+  --permanent
+
+######
+
+$response = aws cognito-idp initiate-auth `
+  --auth-flow USER_PASSWORD_AUTH `
+  --client-id 7kc3e26g5invjv60lnrlhp720q `
+  --auth-parameters USERNAME=testuser,PASSWORD=Example123! | ConvertFrom-Json
+
+#######
+
+$response.AuthenticationResult.IdToken
+
+######
+
+$headers = @{
+    "Authorization" = "eyJraWQiOiJvZ0p5MHpEY1plbWx0b1NYRDhsOTJRWXhhQnJ2Q25HYmtQYXdBeWtmRDRvPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3NDQ4NDRkOC0xMGExLTcwMmQtZWQ3ZS0wNjI0MDhiYjM0YmQiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV94c0N0bU90OWgiLCJjb2duaXRvOnVzZXJuYW1lIjoidGVzdHVzZXIiLCJvcmlnaW5fanRpIjoiYTg0ZGUzNDctZGFkYS00MmZlLWIxMGYtZjdiNTIwNTU2NmI2IiwiYXVkIjoiN2tjM2UyNmc1aW52anY2MGxucmxocDcyMHEiLCJldmVudF9pZCI6ImUxMGE0YjgyLWIyMzUtNGI2OS04MTVlLThmMjhiZGYxN2U2NiIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzQ2NTg0ODg2LCJleHAiOjE3NDY1ODg0ODYsImlhdCI6MTc0NjU4NDg4NiwianRpIjoiM2Q1YzAwNjQtOTMzZC00NTk1LTk4MzMtN2MwM2ExNzMyNmViIiwiZW1haWwiOiJ0ZXN0dXNlckBleGFtcGxlLmNvbSJ9.LV28vPgnEexOWfQ_mPhec-rwNhdQpEm-WO1UiW6Zi8gR5k-2iqwZ-0Knc1oUKR8l3xiPpJdfHW8d7dfuqhvy-LfDRM0D9geQMh0cF67S3JsgihjU58EtlumvcHS1_uPZtYRR8k124HxAlAFdoJUxD7G1m8C52BPxkIFZ0ze66v5_9K6_4DFyWGPGcKU7Q9kQo1YCVXooRlTXXvEj8iVD0CpQ1VnuxJL-DiDNXOm9H7uhoNiT1IbI1tZ4iZLsolLh3jduVYh2vbQ_szmGS0lXsalXH3to6oldZ00mFwhNnI5rmoTqL5_Bz0q2VJx8NRHhUBBu5AiLK_kwl1YxMZ-low"
+}
+
+$response = Invoke-WebRequest -Uri "https://nvyvxr5bae.execute-api.us-east-1.amazonaws.com/dev/hello" -Headers $headers -Method Get
+
+$response.Content
+
+#####
+
+
+#Subir Front a S3
+
+aws s3 sync ./dist/healthyy-front s3://healthy-app-files-1234567890 --delete
+
+
+aws s3 rm s3://healthy-app-files-1234567890 --recursive
