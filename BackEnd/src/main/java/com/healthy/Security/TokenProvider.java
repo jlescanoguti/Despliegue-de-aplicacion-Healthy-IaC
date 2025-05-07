@@ -1,6 +1,5 @@
 package com.healthy.Security;
 
-import com.healthy.config.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -9,6 +8,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,15 +24,20 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 public class TokenProvider {
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
-    private final JwtConfig jwtProperties;
+    @Value("${jwt.validity-in-seconds}")
+    private Long jwtValidityInSeconds;
 
     private Key key;
     private JwtParser jwtParser;
 
     @PostConstruct
     public void init() {
-        key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtProperties.getSecret()));
+
+        key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+
         jwtParser = Jwts
                 .parserBuilder()
                 .setSigningKey(key)
@@ -51,9 +56,9 @@ public class TokenProvider {
         return Jwts
                 .builder()
                 .setSubject(name)
-                .claim("role", role)
+                .claim("role",role)
                 .signWith(key, SignatureAlgorithm.HS512)
-                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getValidityInSeconds() * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtValidityInSeconds*1000))
                 .compact();
     }
 
@@ -70,7 +75,7 @@ public class TokenProvider {
     }
 
     public boolean validateToken(String authToken) {
-        try {
+        try{
             jwtParser.parseClaimsJws(authToken);
             return true;
         } catch (Exception e) {

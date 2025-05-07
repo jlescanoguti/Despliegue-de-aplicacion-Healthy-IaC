@@ -1,7 +1,5 @@
 package com.healthy.model.entity;
 
-import org.springframework.context.annotation.Profile;
-
 import com.healthy.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;

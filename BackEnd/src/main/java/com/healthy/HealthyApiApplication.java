@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HealthyBackendApplication {
+public class HealthyApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(HealthyBackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(HealthyApiApplication.class, args);
+    }
 
 }
