@@ -1,15 +1,20 @@
 ## variables.tf
 
-#S3 Bucket
+# --- General ---
+variable "region" {
+  description = "AWS region"
+  type        = string
+  default     = "us-east-1"
+}
 
+# --- S3 Bucket ---
 variable "bucket_name" {
   description = "Nombre del bucket S3"
   type        = string
-  default     = "healthy-app-files-1234567890"  
+  default     = "healthy-app-files-1234567890"
 }
 
-# Cognito User Pool
-
+# --- Cognito ---
 variable "cognito_user_pool_name" {
   description = "Nombre del User Pool de Cognito"
   type        = string
@@ -22,112 +27,95 @@ variable "cognito_user_pool_client_name" {
   default     = "healthy-client"
 }
 
-# IAM
+# --- IAM ---
 
-variable "lambda_execution_role_name" {
-  description = "Nombre del rol de ejecución de Lambda"
-  type        = string
-  default     = "lambda-execution-role-healthy"
-}
-
-# Lambda
-
-variable "lambda_function_name" {
-  description = "Nombre de la función Lambda"
-  type        = string
-  default     = "healthy-hello-world"
-}
-
-variable "lambda_runtime" {
-  description = "Runtime de la función Lambda"
-  type        = string
-  default     = "nodejs18.x"
-}
-
-variable "lambda_function_zip" {
-  description = "Ruta del archivo ZIP con el código de Lambda"
-  type        = string
-  default     = "lambda_function_payload.zip"
-}
-
-# API Gateway
-
-variable "api_gateway_name" {
-  description = "Nombre de la API Gateway"
-  type        = string
-  default     = "healthy-api"
-}
-
-variable "api_stage_name" {
-  description = "Nombre del stage para la API Gateway"
-  type        = string
-  default     = "dev"
-}
-
-variable "region" {
-  description = "AWS region"
-  type        = string
-  default     = "us-east-1"
-}
-
-# Rango de direcciones IP privadas para la red principal (VPC)
+# --- VPC y Networking ---
 variable "vpc_cidr" {
-  default = "10.0.0.0/16"
+  description = "CIDR block para la VPC"
+  type        = string
+  default     = "10.0.0.0/16"
 }
 
-# Rango de direcciones IP para una subred dentro de la VPC
-variable "subnet_cidr" {
-  default = "10.0.1.0/24"
+variable "subnet_cidr_1" {
+  description = "CIDR block para la subred 1"
+  type        = string
+  default     = "10.0.1.0/24"
 }
 
-# Zona de disponibilidad en la que se desplegará los recursos (como la subred)
-
-variable "availability_zone" {
-  default = "us-east-1a"
+variable "subnet_cidr_2" {
+  description = "CIDR block para la subred 2"
+  type        = string
+  default     = "10.0.2.0/24"
 }
 
-# Nombre de la base de datos PostgreSQL que se creará dentro de RDS
+variable "availability_zone_1" {
+  description = "Zona de disponibilidad 1"
+  type        = string
+  default     = "us-east-1a"
+}
+
+variable "availability_zone_2" {
+  description = "Zona de disponibilidad 2"
+  type        = string
+  default     = "us-east-1b"
+}
+
+# --- Base de Datos RDS ---
 variable "db_name" {
-  default = "healthy_db"
+  description = "Nombre de la base de datos PostgreSQL"
+  type        = string
+  default     = "healthy_db"
 }
 
-# Usuario administrador para la base de datos
 variable "db_username" {
-  default = "healthyadmin"
+  description = "Usuario administrador para la base de datos"
+  type        = string
+  default     = "healthyadmin"
 }
 
-# Contraseña del usuario administrador
-# `sensitive = true` evita que Terraform la muestre en consola
 variable "db_password" {
-  description = "Contraseña de la base de datos"
+  description = "Contraseña del usuario administrador de la base de datos"
+  type        = string
   sensitive   = true
   default     = "PasswordSegura123"
 }
 
-# Tipo de instancia que se usará para RDS
-# db.t3.micro es válida para pruebas y entra dentro del Free Tier
 variable "db_instance_class" {
-  default = "db.t3.micro"
+  description = "Tipo de instancia para la base de datos RDS"
+  type        = string
+  default     = "db.t3.micro"
 }
 
-# Cantidad de almacenamiento asignado (en GB) para la base de datos
-# El mínimo permitido es 20 GB
 variable "db_allocated_storage" {
-  default = 20
+  description = "Cantidad de almacenamiento (GB) para la base de datos"
+  type        = number
+  default     = 20
 }
 
+# --- EC2 ---
+variable "ec2_instance_type" {
+  description = "Tipo de instancia EC2"
+  type        = string
+  default     = "t3.micro"
+}
 
-#EC2
-#variable "ec2_instance_type" {
-#  default = "t2.micro"
-#}
-#
-#variable "key_name" {
-#  description = "Nombre del par de claves SSH"
-#  default     = "healthy-key"
-#}
+variable "key_pair_name" {
+  description = "Nombre de la key pair existente en AWS para conectarse a la instancia EC2"
+  type        = string
+  default     = "healthy-key"
+}
 
+variable "ec2_ami" {
+  description = "AMI para la instancia EC2 (Amazon Linux 2)"
+  type        = string
+  default     = "ami-0c2b8ca1dad447f8a" # Amazon Linux 2 en us-east-1
+}
+
+# --- Seguridad y acceso ---
 variable "my_ip" {
-  description = "Tu IP pública"
-  default     = "179.6.166.107/32"
+  description = "Tu IP pública para acceso SSH u otros (formato CIDR)"
+  type        = string
+  default     = "0.0.0.0/0"  # Por defecto abierto, CAMBIAR para seguridad
 }
+
+

@@ -38,3 +38,5 @@ aws s3 sync ./dist/healthyy-front s3://healthy-app-files-1234567890 --delete
 
 
 aws s3 rm s3://healthy-app-files-1234567890 --recursive
+
+
