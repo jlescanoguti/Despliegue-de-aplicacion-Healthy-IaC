@@ -1,10 +1,42 @@
 version: '3.8'
 
 services:
- aws_emulator:
-  image: motoserver/moto:latest
-  container_name: aws
-  ports:
-   - "5010:5000"
-  environment:
-   - MOTO_PORT=5000
+  aws_emulator:
+    image: motoserver/moto:latest
+    container_name: aws
+    ports:
+      - "5010:5000"
+    environment:
+      - MOTO_PORT=5000
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://loki:3100/loki/api/v1/push"
+
+  loki:
+    image: grafana/loki:2.8.0
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./config/loki:/etc/loki
+    command: -config.file=/etc/loki/loki-config.yaml
+
+  promtail:
+    image: grafana/promtail:2.8.0
+    container_name: promtail
+    volumes:
+      - ./config/promtail:/etc/promtail
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/promtail-config.yaml
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    volumes:
+      - ./config/grafana/provisioning:/etc/grafana/provisioning
