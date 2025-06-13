@@ -13,11 +13,13 @@ resource "aws_security_group" "rds_sg" {
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+  from_port   = 443
+  to_port     = 443
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  description = "Allow HTTPS outbound traffic"
   }
+
 
   tags = {
     Name = "rds-security-group"
@@ -60,11 +62,13 @@ resource "aws_security_group" "ec2_sg" {
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+  from_port   = 443
+  to_port     = 443
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  description = "Allow HTTPS outbound traffic"
   }
+
 
   tags = {
     Name = "ec2-security-group"
@@ -86,11 +90,13 @@ resource "aws_security_group" "alb_sg" {
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+  from_port   = 443
+  to_port     = 443
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  description = "Allow HTTPS outbound traffic"
   }
+
 
   tags = {
     Name = "alb-sg"
