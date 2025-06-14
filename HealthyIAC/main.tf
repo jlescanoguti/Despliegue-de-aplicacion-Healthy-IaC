@@ -8,5 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region  = var.region
+  access_key = var.aws_access_key  # Usar variables de entorno o Terraform Vault
+  secret_key = var.aws_secret_key  # Usar variables de entorno o Terraform Vault
 }
