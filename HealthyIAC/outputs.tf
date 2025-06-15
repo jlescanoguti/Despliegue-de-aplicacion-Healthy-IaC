@@ -41,3 +41,7 @@ output "ec2_private_ip" {
   description = "La IP privada de la instancia EC2"
   value       = aws_instance.backend.private_ip
 }
+
+output "grafana_role_arn" {
+  value = aws_iam_role.grafana_cloudwatch_role.arn
+}
