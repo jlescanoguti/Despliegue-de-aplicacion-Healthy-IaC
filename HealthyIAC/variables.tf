@@ -115,7 +115,7 @@ variable "ec2_ami" {
 variable "my_ip" {
   description = "Tu IP pública para acceso SSH u otros (formato CIDR)"
   type        = string
-  default     = "0.0.0.0/0"  # Por defecto abierto, CAMBIAR para seguridad
+  default     = "0.0.0.0/0" 
 }
 
 
