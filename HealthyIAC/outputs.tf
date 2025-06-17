@@ -41,3 +41,13 @@ output "ec2_private_ip" {
   description = "La IP privada de la instancia EC2"
   value       = aws_instance.backend.private_ip
 }
+
+output "cloudfront_domain_name" {
+  description = "Dominio público de CloudFront"
+  value       = aws_cloudfront_distribution.s3_distribution.domain_name
+}
+
+output "cloudfront_distribution_arn" {
+  description = "ARN de la distribución CloudFront (para usar en políticas)"
+  value       = aws_cloudfront_distribution.s3_distribution.arn
+}
