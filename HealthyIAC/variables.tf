@@ -118,4 +118,8 @@ variable "my_ip" {
   default     = "0.0.0.0/0" 
 }
 
+variable "waf_name" {
+  default     = "cloudfront-waf"
+  description = "Nombre del WAF asociado a CloudFront"
+}
 
