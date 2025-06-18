@@ -51,3 +51,13 @@ output "cloudfront_distribution_arn" {
   description = "ARN de la distribución CloudFront (para usar en políticas)"
   value       = aws_cloudfront_distribution.s3_distribution.arn
 }
+
+output "waf_arn" {
+  value       = aws_wafv2_web_acl.cloudfront_waf.arn
+  description = "ARN del WAF aplicado a CloudFront"
+}
+
+output "api_gateway_url" {
+  description = "Invoke URL del API Gateway"
+  value       = aws_apigatewayv2_stage.default.invoke_url
+}
