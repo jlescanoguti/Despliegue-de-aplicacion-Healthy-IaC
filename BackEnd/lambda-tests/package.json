@@ -1,0 +1,12 @@
+{
+    "name": "lambda-tests",
+    "version": "1.0.0",
+    "description": "Pruebas Lambda para crear plan",
+    "main": "index.js",
+    "scripts": {
+      "test": "jest"
+    },
+    "devDependencies": {
+      "jest": "^29.0.0"
+    }
+  }
