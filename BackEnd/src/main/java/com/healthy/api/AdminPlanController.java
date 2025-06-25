@@ -43,6 +43,7 @@ public class AdminPlanController {
         return new ResponseEntity<>(plan, HttpStatus.OK);
     }
 
+    //Función usada para las pruebas unitarias
     @PostMapping
     @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<PlanDTO> create(@RequestBody PlanCreateDTO planDTO) {
