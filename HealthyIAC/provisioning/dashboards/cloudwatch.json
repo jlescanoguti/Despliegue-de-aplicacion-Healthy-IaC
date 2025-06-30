@@ -1,0 +1,33 @@
+{
+  "title": "CloudWatch Metrics",
+  "panels": [
+    {
+      "title": "CPU Usage",
+      "type": "graph",
+      "datasource": "CloudWatch",
+      "targets": [
+        {
+          "namespace": "AWS/EC2",
+          "metricName": "CPUUtilization",
+          "statistics": ["Average"],
+          "period": "300",
+          "region": "us-east-1"
+        }
+      ]
+    },
+    {
+      "title": "HTTP Requests",
+      "type": "stat",
+      "datasource": "CloudWatch",
+      "targets": [
+        {
+          "namespace": "AWS/ApplicationELB",
+          "metricName": "RequestCount",
+          "statistics": ["Sum"],
+          "period": "60",
+          "region": "us-east-1"
+        }
+      ]
+    }
+  ]
+}

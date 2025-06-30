@@ -20,29 +20,65 @@ Healthy es una aplicación web de bienestar físico y emocional que permite a lo
 - Amazon RDS (PostgreSQL): Provisión de la base de datos relacional para almacenamiento persistente.
 - CloudWatch: Configuración de logs y métricas para monitoreo del sistema.
 
-**Estructura del Proyecto**
-'''markdown
+## Objetivos
 
-raíz del proyecto/
-└── HealthyIAC/
-    ├── apigateway.tf
-    ├── cloudfront.tf
-    ├── cloudwatch.tf
-    ├── cognito.tf
-    ├── database.tf
-    ├── ec2.txt
-    ├── iam.tf
-    ├── index.js
-    ├── lambda.tf
-    ├── lambda_function_payload.zip
-    ├── main.tf
-    ├── outputs.tf
-    ├── s3.tf
-    ├── terraform.tfstate
-    ├── variables.tf
-    ├── vpc.tf
-    ├── .gitignore
-    ├── FlujoInicioSesión-Simulación.txt
-    └── README.md 
-└── Frontend/
-└── Backend/
+## Tecnologías y Herramientas
+
+* **Terraform** (IaC)
+* **AWS** (VPC, EKS, Aurora, S3, ALB, IAM)
+* **Spring Boot** (Backend)
+* **Docker & Amazon ECR** (Contenedores)
+* **GitHub Actions** (CI/CD)
+* **Git & GitHub** (Control de versiones)
+
+## Requisitos Previos
+
+* Cuenta AWS con **Access Key ID** y **Secret Access Key** configurados.
+* Terraform ≥ 1.0 instalado.
+* Docker instalado.
+* Repositorio GitHub con permisos para configurar Actions y Secrets.
+
+---
+
+## Instalación y Configuración
+
+1. Clona el repositorio:
+
+   ```bash
+link
+   https://github.com/jlescanoguti/Despliegue-de-aplicacion-Healthy-IaC.git
+   ```
+
+
+## Despliegue
+
+### 1. Terraform
+
+```bash
+terraform init
+terraform plan 
+terraform apply
+terraform destroy
+```
+
+
+
+## Buenas Prácticas
+
+* Revisa siempre el plan de Terraform antes de aplicar (`terraform plan`).
+* Guarda credenciales y tokens en GitHub Secrets.
+* Aplica principios de mínimo privilegio en IAM.
+* Versiona cada cambio en Terraform y Docker.
+
+---
+
+
+## Contribuciones
+
+1. Haz fork del repositorio.
+2. Crea una rama de feature: `git checkout -b feature/mi-cambio`.
+3. Realiza tus cambios y haz commit: `git commit -m "feat: descripción"`.
+4. Sube la rama: `git push origin feature/mi-cambio`.
+5. Abre un Pull Request describiendo los cambios.
+
+---

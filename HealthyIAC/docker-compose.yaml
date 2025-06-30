@@ -1,10 +1,86 @@
-version: '3.8'
+version: "3.8"
 
 services:
- aws_emulator:
-  image: motoserver/moto:latest
-  container_name: aws
-  ports:
-   - "5010:5000"
-  environment:
-   - MOTO_PORT=5000
+  jenkins:
+    build: .
+    container_name: healthy-jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - C:/Users/Administrador/Desktop/Jenkins/Despliegue-de-aplicacion-Healthy-IaC:/var/jenkins_home/healthy-project
+    networks:
+      - monitoring
+
+  aws_emulator:
+    image: motoserver/moto:latest
+    container_name: aws
+    ports:
+      - "5010:5000"
+    environment:
+      - MOTO_PORT=5000
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - GF_AWS_ALLOWED_AUTH_PROVIDERS=default,keys,credentials
+      - GF_AWS_AUTH_TYPE=default
+      - GF_AWS_DEFAULT_REGION=us-east-1
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+    networks:
+      - monitoring
+
+  loki:
+    image: grafana/loki:2.9.0
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./config/loki-config.yaml:/etc/loki/config.yaml
+      - loki-data:/loki
+    command: -config.file=/etc/loki/config.yaml
+    networks:
+      - monitoring
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O- http://localhost:3100/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: promtail
+    depends_on:
+      loki:
+        condition: service_healthy
+    volumes:
+      - type: bind
+        source: ./var/log
+        target: /var/log
+        read_only: true
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./config/promtail-config.yaml:/etc/promtail/promtail-config.yaml
+    command:
+      - -config.file=/etc/promtail/promtail-config.yaml
+      - -client.external-labels=hostname=${COMPUTERNAME}
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+
+volumes:
+  loki-data:
+  grafana-storage:
+  jenkins_data:

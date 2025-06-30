@@ -1,0 +1,61 @@
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  grpc_listen_port: 9096
+  log_level: info
+
+common:
+  path_prefix: /loki
+  storage:
+    filesystem:
+      chunks_directory: /loki/chunks
+      rules_directory: /loki/rules
+  replication_factor: 1
+  ring:
+    instance_addr: 127.0.0.1
+    kvstore:
+      store: inmemory
+
+schema_config:
+  configs:
+    - from: 2020-10-24
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v11
+      index:
+        prefix: index_
+        period: 24h
+
+storage_config:
+  boltdb_shipper:
+    active_index_directory: /loki/index
+    cache_location: /loki/boltdb-cache
+    shared_store: filesystem
+
+limits_config:
+  ingestion_rate_mb: 10
+  ingestion_burst_size_mb: 15
+  ingestion_rate_strategy: "local"
+  max_entries_limit_per_query: 5000
+  volume_enabled: true
+  reject_old_samples: false
+  reject_old_samples_max_age: 8760h
+  retention_period: 720h
+  per_stream_rate_limit: 8MB
+  per_stream_rate_limit_burst: 12MB
+
+ruler:
+  alertmanager_url: http://alertmanager:9093
+  enable_api: true
+  ring:
+    kvstore:
+      store: inmemory
+
+chunk_store_config:
+  max_look_back_period: 720h
+
+compactor:
+  working_directory: /loki/compactor
+  shared_store: filesystem
+  retention_enabled: true

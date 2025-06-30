@@ -1,0 +1,9 @@
+git
+workflow-aggregator
+pipeline-aws
+terraform
+docker-plugin
+blueocean
+ssh-agent
+aws-credentials
+nodejs
